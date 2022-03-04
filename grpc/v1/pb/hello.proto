@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "../pbgo/hello"; // protoc --go_out=plugins=grpc:. hello.proto  生成的代码还是以执行protoc的位置开始的
+//option go_package = "golearning/grpc/v1/pbgo/hello"; // protoc --go_out=plugins=grpc:. hello.proto  生成的代码还是以执行protoc的位置开始的
+
+message String {
+  string value = 1;
+}
+
+service HelloService {
+  rpc Hello (String) returns (String);
+}
+// protoc --go_out=plugins=grpc:. hello.proto
