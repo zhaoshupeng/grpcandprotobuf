@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package example.third;
+
+option go_package ="../third";
+/**
+  第三方包使用： 要加入本身协议文件所在目录
+    protoc --proto_path=$GOPATH/src --proto_path=${GOPATH}/src/golearning/protobuflearn/score_server    --gogo_out=. third.proto
+
+    要选择好编译的模式,有些默认的是为了速度快，使用了gofast，但是他不支持其它gogoprotobuf extensions（这里的时间就是）。
+
+ */
+/**
+    https://github.com/gogo/protobuf/blob/master/gogoproto/gogo.proto
+    https://yushuangqi.com/blog/2017/golangshi-yong-protobuf.html
+ */
+//---------------------
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+
+// 设置第三方库的文件级别 option 的值； gogoproto 是包名
+option (gogoproto.testgen_all) = true;
+option (gogoproto.populate_all) = true;
+option (gogoproto.benchgen_all) = true;
+option (gogoproto.unmarshaler_all) = false;
+option (gogoproto.marshaler_all) = false;
+option (gogoproto.sizer_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.verbose_equal_all) = true;
+option (gogoproto.unsafe_marshaler_all) = false;
+option (gogoproto.unsafe_unmarshaler_all) = false;
+
+
+// 内置到protoc的库
+import "google/protobuf/duration.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+
+
+message ProtoTypes {
+  // TODO this should be a compare_all at the top of the file once time.Time, time.Duration, oneof and map is supported by compare
+  option (gogoproto.compare) = true;
+  google.protobuf.Timestamp nullableTimestamp = 1;
+  google.protobuf.Duration nullableDuration = 2;
+  google.protobuf.DoubleValue nullableDouble = 3;
+  google.protobuf.FloatValue nullableFloat = 4;
+  google.protobuf.Int64Value nullableInt64 = 5;
+  google.protobuf.UInt64Value nullableUInt64 = 6;
+  google.protobuf.Int32Value nullableInt32 = 7;
+  google.protobuf.UInt32Value nullableUInt32 = 8;
+  google.protobuf.BoolValue nullableBool = 9;
+  google.protobuf.StringValue nullableString = 10;
+  google.protobuf.BytesValue nullableBytes = 11;
+
+  google.protobuf.Timestamp timestamp = 12 [(gogoproto.nullable) = false];
+  google.protobuf.Duration duration = 13 [(gogoproto.nullable) = false];
+  google.protobuf.DoubleValue nonnullDouble = 14 [(gogoproto.nullable) = false];
+  google.protobuf.FloatValue nonnullFloat = 15 [(gogoproto.nullable) = false];
+  google.protobuf.Int64Value nonnullInt64 = 16 [(gogoproto.nullable) = false];
+  google.protobuf.UInt64Value nonnullUInt64 = 17 [(gogoproto.nullable) = false];
+  google.protobuf.Int32Value nonnullInt32 = 18 [(gogoproto.nullable) = false];
+  google.protobuf.UInt32Value nonnullUInt32 = 19 [(gogoproto.nullable) = false];
+  google.protobuf.BoolValue nonnullBool = 20 [(gogoproto.nullable) = false];
+  google.protobuf.StringValue nonnullString = 21 [(gogoproto.nullable) = false];
+  google.protobuf.BytesValue nonnullBytes = 22 [(gogoproto.nullable) = false];
+}
+message StdTypes {
+  google.protobuf.Timestamp nullableTimestamp = 1 [(gogoproto.stdtime) = true];
+  google.protobuf.Duration nullableDuration = 2 [(gogoproto.stdduration) = true];
+  google.protobuf.DoubleValue nullableDouble = 3 [(gogoproto.wktpointer) = true];;
+  google.protobuf.FloatValue nullableFloat = 4 [(gogoproto.wktpointer) = true];;
+  google.protobuf.Int64Value nullableInt64 = 5 [(gogoproto.wktpointer) = true];;
+  google.protobuf.UInt64Value nullableUInt64 = 6 [(gogoproto.wktpointer) = true];;
+  google.protobuf.Int32Value nullableInt32 = 7 [(gogoproto.wktpointer) = true];;
+  google.protobuf.UInt32Value nullableUInt32 = 8 [(gogoproto.wktpointer) = true];;
+  google.protobuf.BoolValue nullableBool = 9 [(gogoproto.wktpointer) = true];;
+  google.protobuf.StringValue nullableString = 10 [(gogoproto.wktpointer) = true];;
+  google.protobuf.BytesValue nullableBytes = 11 [(gogoproto.wktpointer) = true];;
+
+  google.protobuf.Timestamp timestamp = 12 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Duration duration = 13 [(gogoproto.stdduration) = true, (gogoproto.nullable) = false];
+  google.protobuf.DoubleValue nonnullDouble = 14 [(gogoproto.wktpointer) = true, (gogoproto.nullable) = false];
+  google.protobuf.FloatValue nonnullFloat = 15 [(gogoproto.wktpointer) = true, (gogoproto.nullable) = false];
+  google.protobuf.Int64Value nonnullInt64 = 16 [(gogoproto.wktpointer) = true, (gogoproto.nullable) = false];
+  google.protobuf.UInt64Value nonnullUInt64 = 17 [(gogoproto.wktpointer) = true, (gogoproto.nullable) = false];
+  google.protobuf.Int32Value nonnullInt32 = 18 [(gogoproto.wktpointer) = true, (gogoproto.nullable) = false];
+  google.protobuf.UInt32Value nonnullUInt32 = 19 [(gogoproto.wktpointer) = true, (gogoproto.nullable) = false];
+  google.protobuf.BoolValue nonnullBool = 20 [(gogoproto.wktpointer) = true, (gogoproto.nullable) = false];
+  google.protobuf.StringValue nonnullString = 21 [(gogoproto.wktpointer) = true, (gogoproto.nullable) = false];
+  google.protobuf.BytesValue nonnullBytes = 22 [(gogoproto.wktpointer) = true, (gogoproto.nullable) = false];
+}

@@ -1,0 +1,69 @@
+disk_parted_rules:
+  controllers-disks:
+    - name: /dev/sdb
+      parts:
+        - bdev: /dev/sdb1
+          capacity:
+            start: 1MB
+            end: 1000000MB           # 2T=>1T
+          path: /mnt/locals/kafkas/volume1
+        - bdev: /dev/sdb2
+          capacity:
+            start: 1000000MB
+            end: 1200000MB           # 10% of total disk =>200G
+          path: /mnt/locals/monitoring-prometheus/volume0
+        - bdev: /dev/sdb3
+          capacity:
+            start: 1200000MB
+            end: 1300000MB           # 10% of total disk=>100G
+          path: /mnt/locals/monitoring-alertmanager/volume0
+        - bdev: /dev/sdb4
+          capacity:
+            start: 1300000MB
+            end: 1400000MB          # 80% of total disk=>100G
+          path: /mnt/locals/logging-elasticsearch/volume0
+        - bdev: /dev/sdb5
+          capacity:
+            start: 1400000MB
+            end: 2500000MB          # 1.5T => 1.1T
+          path: /mnt/locals/minio/volume0
+        - bdev: /dev/sdb6
+          capacity:
+            start: 2500000MB
+            end: 2700000MB        # 200G
+          path: /mnt/locals/cassandras-commitlog/volume0
+        - bdev: /dev/sdb7
+          capacity:
+            start: 2700000MB
+            end: 3000000MB        # 290G=>300G
+          path: /mnt/locals/cassandras-data/volume1
+        - bdev: /dev/sdb8
+          capacity:
+            start: 3000000MB
+            end: 3010000MB        # 10G
+          path: /mnt/locals/zookeepers/volume0
+        - bdev: /dev/sdb9
+          capacity:
+            start: 3010000MB
+            end: 4100000MB           # 1.5T=>1.1T
+          path: /mnt/locals/minio/volume1
+        - bdev: /dev/sdb10
+          capacity:
+            start: 4100000MB
+            end: 4110000MB          # 10GB
+          path: /mnt/locals/hadoop-namenode-metadata/volume0
+        - bdev: /dev/sdb11
+          capacity:
+            start: 4110000MB
+            end: 4120000MB          # 10GB
+          path: /mnt/locals/hadoop-journalnode-editor/volume0
+        - bdev: /dev/sdb12
+          capacity:
+            start: 4120000MB
+            end: 4600000MB           # 500G
+          path: /mnt/locals/mysql/volume1
+        - bdev: /dev/sdb13
+          capacity:
+            start: 4600000MB
+            end: 5100000MB          # 500GB
+          path: /mnt/locals/model-manager/volume0

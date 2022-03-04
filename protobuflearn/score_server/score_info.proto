@@ -1,0 +1,83 @@
+syntax = "proto3"; // protobuf 有2个版本，默认版本是 proto2，如果需要 proto3，则需要在非空非注释第一行使用 syntax = "proto3" 标明版本。
+
+// package，即包名声明符是可选的，用来防止不同的消息类型有命名冲突。
+// 在没有为特定语言定义option xxx_package的时候，它还可以用来生成特定语言的包名
+package example.everything; // proto包名
+
+// 引入的any.proto和descriptor.proto已经内置到protoc中，如果单纯只有这两个的话编译时不需要加-I参数
+import "google/protobuf/any.proto";
+import "google/protobuf/descriptor.proto";
+/**
+    在当前的目录下执行protoc -I=. -I/usr/local/include -I=$(GOPATH)/src --go_out=. score_info.proto,
+  可以将这个proto编译成Go的代码，因为这里我们使用了go_out输出格式。
+    -I指定protoc的搜索import的proto的文件夹。在MacOS操作系统中protobuf把一些扩展的proto放在了/usr/local/include对应的
+  文件夹中，一些第三方的Go库放在了gopath对应的包下，所以这里都把它们加上了。
+    生成的数据结构如下，它还包括一些辅助方法以及GetXXXX读取字段的方法。
+    如果不指定该参数，则默认在当前路径下进行搜索；另外，该参数也可以指定多次，这也意味着我们可以指定多个路径进行搜索。
+
+ */
+
+// option的定义格式是"option" optionName "=" constant ";"
+// --go_out=.  和 go_package 共同决定了生成go文件的未知
+//option go_package ="./api";
+// option go_package = "aaa;bbb"; // aaa 表示生成的go文件的存放地址，会自动生成目录的。bbb 表示生成的go文件所属的包名
+option go_package ="../score_server";  //添加该行代码，执行下面的编译命令，文件会生成在.proto相同的目录下。
+// 编译proto文件，生成go代码  protoc --go_out=. score_info.proto
+// https://blog.csdn.net/bestzy6/article/details/118276674
+
+
+
+
+
+// 基本的积分消息
+message base_score_info_t{
+    int32       win_count = 1;                  // 玩家胜局局数
+    int32       lose_count = 2;                 // 玩家负局局数
+    int32       exception_count = 3;            // 玩家异常局局数
+    int32       kill_count = 4;                 // 总人头数
+    int32       death_count = 5;                // 总死亡数
+    int32       assist_count = 6;               // 总总助攻数
+    int64       rating = 7;                     // 评价积分
+
+
+    repeated string snippets = 8;   // 数组类型
+    /**
+        Any字段允许你处理嵌套数据，并不需要它的proto定义。一个Any以bytes呈现序列化的消息，并且包含一个URL作为这个类型的唯一标
+    识和元数据。
+        为了使用Any类型，你需要引入google/protobuf/any.proto
+        Any类型用来替换proto2中的扩展。
+
+     */
+    repeated google.protobuf.Any details = 12;
+
+    oneof test_oneof {
+        string m1 = 13;
+        int32 m2 = 14;
+    }
+
+    /*
+        更新消息类型时，可能会将某些字段/标识符删除。这些被删掉的字段/标识符可能被重新使用，如果加载老版本的数据时，
+    可能会造成数据冲突，在升级时，可以将这些字段/标识符保留(reserved)，这样就不会被重新使用了，protoc 会检查。
+    */
+    reserved 15, 9 to 11;
+    reserved "foo", "bar";
+
+
+}
+
+// 除了使用内置的外，可以通过extend字段来扩展内置的FileOptions
+message extObjOri {
+    string foo_string= 1;
+    int64 bar_int=2;
+}
+// file options
+extend google.protobuf.FileOptions {
+    string file_opt_string = 1001;
+    extObjOri file_opt_obj = 1002;
+}
+// 通过option关键字设置了两个文件级别的options。 example.everything 是proto的包名。
+option (example.everything.file_opt_string) = "file_options";
+option (example.everything.file_opt_obj) = {
+    foo_string: "foo"
+    bar_int:1
+};

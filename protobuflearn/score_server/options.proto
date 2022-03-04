@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package example.option;
+
+option go_package ="../option";
+
+// 引入的any.proto和descriptor.proto已经内置到protoc中，如果单纯只有这两个的话编译时不需要加-I参数
+import "google/protobuf/any.proto";
+import "google/protobuf/descriptor.proto";
+
+
+
+
+/**
+  相信大部的gopher在平常使用protobuf的过程中都很少关注options，80%的开发工作也不需要直接用到options。但options是一个很有用
+的功能，其大大提高了protobuf的扩展性，我们有必要了解它。options其实是protobuf内置的一些message类型，其分为以下几个级别：
+  文件级别(file-level options)
+  消息级别(message-level options)
+  字段级别(field-level options)
+  service级别(service options)
+  method级别(method options)
+
+  protobuf提供一些内置的options可供选择，也提供了通过extend关键字来扩展这些options，达到增加自定义options的目的。
+  options不会改变声明的整体含义（例如声明的是int32就是int32，不会因为一个option改变了其声明类型），但可能会影响在特定情况下处
+理它的方式。
+
+  当我们需要编写自定义protoc插件时，可以通过自定义options为编译插件提供额外信息。
+
+ */
+
+
+message extObj {
+  string foo_string= 1;
+  int64 bar_int=2;
+}
+
+//---------------------------------------------------------------------------------
+//通过extend字段来扩展内置的FileOptions，我们新增了两个新的option——string类型的file_opt_string和extObj类型的file_opt_obj。
+// file options
+extend google.protobuf.FileOptions {
+  string file_opt_string = 1011;
+  extObj file_opt_obj = 1012;
+}
+// 通过option关键字设置了两个文件级别的options。 example.everything 是proto的包名。
+option (example.option.file_opt_string) = "file_options";
+option (example.option.file_opt_obj) = {
+  foo_string: "foo"
+  bar_int:1
+};
+
+
+//---------------------------------------------------------------------------------
+// message options
+extend google.protobuf.MessageOptions {
+  string msg_opt_string = 1011;
+  extObj msg_opt_obj = 1012;
+}
+message MessageOption {
+  option (example.option.msg_opt_string) = "Hello world!";
+  option (example.option.msg_opt_obj) = {
+    foo_string: "foo11"
+    bar_int:222
+  };
+  string foo = 1;
+}
+
+//---------------------------------------
+
+// field options
+extend google.protobuf.FieldOptions {
+  string field_opt_string = 1021;
+  extObj field_opt_obj = 1022;
+}
+// 字段级别的option定义方式不使用option关键字，格式为：用[]包裹的用逗号分隔的k=v形式的数组。
+message FieldOption {
+  // 自定义的option
+  string foo= 1 [(example.option.field_opt_string) = "abc",(example.option.field_opt_obj) = {
+    foo_string: "foo"
+    bar_int:1
+  }];
+  // protobuf内置的option
+  string bar = 2 [deprecated = true];
+}
+
