@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "./;main";
+
+// 在开源社区中，github.com/mwitkow/go-proto-validators 已经基于 Protobuf 的扩展特性实现了功能较为强大的验证器功能。要使用该验证器首先需要下载其提供的代码生成插件：
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+
+// 然后基于 go-proto-validators 验证器的规则为 Message 成员增加验证规则：
+message Message {
+  string important_string = 1 [(validator.field) = {regex: "^[a-z]{2,5}$"}];
+  int32 age = 2 [(validator.field) = {int_gt: 0, int_lt: 100}];
+}

@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.26.0
 // 	protoc        v3.19.4
-// source: hello.proto
+// source: golearning/grpc/v1/pb/hello.proto
 
 package hello
 
@@ -35,7 +35,7 @@ type String struct {
 func (x *String) Reset() {
 	*x = String{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_hello_proto_msgTypes[0]
+		mi := &file_golearning_grpc_v1_pb_hello_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -48,7 +48,7 @@ func (x *String) String() string {
 func (*String) ProtoMessage() {}
 
 func (x *String) ProtoReflect() protoreflect.Message {
-	mi := &file_hello_proto_msgTypes[0]
+	mi := &file_golearning_grpc_v1_pb_hello_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61,7 +61,7 @@ func (x *String) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use String.ProtoReflect.Descriptor instead.
 func (*String) Descriptor() ([]byte, []int) {
-	return file_hello_proto_rawDescGZIP(), []int{0}
+	return file_golearning_grpc_v1_pb_hello_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *String) GetValue() string {
@@ -71,53 +71,60 @@ func (x *String) GetValue() string {
 	return ""
 }
 
-var File_hello_proto protoreflect.FileDescriptor
+var File_golearning_grpc_v1_pb_hello_proto protoreflect.FileDescriptor
 
-var file_hello_proto_rawDesc = []byte{
-	0x0a, 0x0b, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x04, 0x6d,
-	0x61, 0x69, 0x6e, 0x22, 0x1e, 0x0a, 0x06, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x12, 0x14, 0x0a,
-	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61,
-	0x6c, 0x75, 0x65, 0x32, 0x33, 0x0a, 0x0c, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x53, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x12, 0x23, 0x0a, 0x05, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x12, 0x0c, 0x2e, 0x6d,
-	0x61, 0x69, 0x6e, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x1a, 0x0c, 0x2e, 0x6d, 0x61, 0x69,
-	0x6e, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x42, 0x0f, 0x5a, 0x0d, 0x2e, 0x2e, 0x2f, 0x70,
-	0x62, 0x67, 0x6f, 0x2f, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+var file_golearning_grpc_v1_pb_hello_proto_rawDesc = []byte{
+	0x0a, 0x21, 0x67, 0x6f, 0x6c, 0x65, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x2f, 0x67, 0x72, 0x70,
+	0x63, 0x2f, 0x76, 0x31, 0x2f, 0x70, 0x62, 0x2f, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x12, 0x04, 0x6d, 0x61, 0x69, 0x6e, 0x22, 0x1e, 0x0a, 0x06, 0x53, 0x74, 0x72,
+	0x69, 0x6e, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x32, 0x5e, 0x0a, 0x0c, 0x48, 0x65, 0x6c,
+	0x6c, 0x6f, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x23, 0x0a, 0x05, 0x48, 0x65, 0x6c,
+	0x6c, 0x6f, 0x12, 0x0c, 0x2e, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67,
+	0x1a, 0x0c, 0x2e, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x12, 0x29,
+	0x0a, 0x07, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x12, 0x0c, 0x2e, 0x6d, 0x61, 0x69, 0x6e,
+	0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x1a, 0x0c, 0x2e, 0x6d, 0x61, 0x69, 0x6e, 0x2e, 0x53,
+	0x74, 0x72, 0x69, 0x6e, 0x67, 0x28, 0x01, 0x30, 0x01, 0x42, 0x1f, 0x5a, 0x1d, 0x67, 0x6f, 0x6c,
+	0x65, 0x61, 0x72, 0x6e, 0x69, 0x6e, 0x67, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x76, 0x31, 0x2f,
+	0x70, 0x62, 0x67, 0x6f, 0x2f, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
-	file_hello_proto_rawDescOnce sync.Once
-	file_hello_proto_rawDescData = file_hello_proto_rawDesc
+	file_golearning_grpc_v1_pb_hello_proto_rawDescOnce sync.Once
+	file_golearning_grpc_v1_pb_hello_proto_rawDescData = file_golearning_grpc_v1_pb_hello_proto_rawDesc
 )
 
-func file_hello_proto_rawDescGZIP() []byte {
-	file_hello_proto_rawDescOnce.Do(func() {
-		file_hello_proto_rawDescData = protoimpl.X.CompressGZIP(file_hello_proto_rawDescData)
+func file_golearning_grpc_v1_pb_hello_proto_rawDescGZIP() []byte {
+	file_golearning_grpc_v1_pb_hello_proto_rawDescOnce.Do(func() {
+		file_golearning_grpc_v1_pb_hello_proto_rawDescData = protoimpl.X.CompressGZIP(file_golearning_grpc_v1_pb_hello_proto_rawDescData)
 	})
-	return file_hello_proto_rawDescData
+	return file_golearning_grpc_v1_pb_hello_proto_rawDescData
 }
 
-var file_hello_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_hello_proto_goTypes = []interface{}{
+var file_golearning_grpc_v1_pb_hello_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_golearning_grpc_v1_pb_hello_proto_goTypes = []interface{}{
 	(*String)(nil), // 0: main.String
 }
-var file_hello_proto_depIdxs = []int32{
+var file_golearning_grpc_v1_pb_hello_proto_depIdxs = []int32{
 	0, // 0: main.HelloService.Hello:input_type -> main.String
-	0, // 1: main.HelloService.Hello:output_type -> main.String
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	0, // 1: main.HelloService.Channel:input_type -> main.String
+	0, // 2: main.HelloService.Hello:output_type -> main.String
+	0, // 3: main.HelloService.Channel:output_type -> main.String
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_hello_proto_init() }
-func file_hello_proto_init() {
-	if File_hello_proto != nil {
+func init() { file_golearning_grpc_v1_pb_hello_proto_init() }
+func file_golearning_grpc_v1_pb_hello_proto_init() {
+	if File_golearning_grpc_v1_pb_hello_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_hello_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_golearning_grpc_v1_pb_hello_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*String); i {
 			case 0:
 				return &v.state
@@ -134,20 +141,20 @@ func file_hello_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_hello_proto_rawDesc,
+			RawDescriptor: file_golearning_grpc_v1_pb_hello_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_hello_proto_goTypes,
-		DependencyIndexes: file_hello_proto_depIdxs,
-		MessageInfos:      file_hello_proto_msgTypes,
+		GoTypes:           file_golearning_grpc_v1_pb_hello_proto_goTypes,
+		DependencyIndexes: file_golearning_grpc_v1_pb_hello_proto_depIdxs,
+		MessageInfos:      file_golearning_grpc_v1_pb_hello_proto_msgTypes,
 	}.Build()
-	File_hello_proto = out.File
-	file_hello_proto_rawDesc = nil
-	file_hello_proto_goTypes = nil
-	file_hello_proto_depIdxs = nil
+	File_golearning_grpc_v1_pb_hello_proto = out.File
+	file_golearning_grpc_v1_pb_hello_proto_rawDesc = nil
+	file_golearning_grpc_v1_pb_hello_proto_goTypes = nil
+	file_golearning_grpc_v1_pb_hello_proto_depIdxs = nil
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -163,6 +170,9 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type HelloServiceClient interface {
 	Hello(ctx context.Context, in *String, opts ...grpc.CallOption) (*String, error)
+	// 服务端或客户端的单向流是双向流的特例，我们在 HelloService 增加一个支持双向流的 Channel 方法：
+	// 关键字 stream 指定启用流特性，参数部分是接收客户端参数的流，返回值是返回给客户端的流。
+	Channel(ctx context.Context, opts ...grpc.CallOption) (HelloService_ChannelClient, error)
 }
 
 type helloServiceClient struct {
@@ -182,9 +192,43 @@ func (c *helloServiceClient) Hello(ctx context.Context, in *String, opts ...grpc
 	return out, nil
 }
 
+func (c *helloServiceClient) Channel(ctx context.Context, opts ...grpc.CallOption) (HelloService_ChannelClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_HelloService_serviceDesc.Streams[0], "/main.HelloService/Channel", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &helloServiceChannelClient{stream}
+	return x, nil
+}
+
+type HelloService_ChannelClient interface {
+	Send(*String) error
+	Recv() (*String, error)
+	grpc.ClientStream
+}
+
+type helloServiceChannelClient struct {
+	grpc.ClientStream
+}
+
+func (x *helloServiceChannelClient) Send(m *String) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *helloServiceChannelClient) Recv() (*String, error) {
+	m := new(String)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // HelloServiceServer is the server API for HelloService service.
 type HelloServiceServer interface {
 	Hello(context.Context, *String) (*String, error)
+	// 服务端或客户端的单向流是双向流的特例，我们在 HelloService 增加一个支持双向流的 Channel 方法：
+	// 关键字 stream 指定启用流特性，参数部分是接收客户端参数的流，返回值是返回给客户端的流。
+	Channel(HelloService_ChannelServer) error
 }
 
 // UnimplementedHelloServiceServer can be embedded to have forward compatible implementations.
@@ -193,6 +237,9 @@ type UnimplementedHelloServiceServer struct {
 
 func (*UnimplementedHelloServiceServer) Hello(context.Context, *String) (*String, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Hello not implemented")
+}
+func (*UnimplementedHelloServiceServer) Channel(HelloService_ChannelServer) error {
+	return status.Errorf(codes.Unimplemented, "method Channel not implemented")
 }
 
 func RegisterHelloServiceServer(s *grpc.Server, srv HelloServiceServer) {
@@ -217,6 +264,32 @@ func _HelloService_Hello_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HelloService_Channel_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(HelloServiceServer).Channel(&helloServiceChannelServer{stream})
+}
+
+type HelloService_ChannelServer interface {
+	Send(*String) error
+	Recv() (*String, error)
+	grpc.ServerStream
+}
+
+type helloServiceChannelServer struct {
+	grpc.ServerStream
+}
+
+func (x *helloServiceChannelServer) Send(m *String) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *helloServiceChannelServer) Recv() (*String, error) {
+	m := new(String)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _HelloService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "main.HelloService",
 	HandlerType: (*HelloServiceServer)(nil),
@@ -226,6 +299,13 @@ var _HelloService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _HelloService_Hello_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "hello.proto",
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Channel",
+			Handler:       _HelloService_Channel_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
+	Metadata: "golearning/grpc/v1/pb/hello.proto",
 }

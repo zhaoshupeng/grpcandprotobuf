@@ -2,7 +2,8 @@ syntax = "proto3";
 
 package main;
 
-option go_package = "../pbgo/hello"; // protoc --go_out=plugins=grpc:. hello.proto  生成的代码还是以执行protoc的位置开始的
+option go_package = "golearning/grpc/v1/pbgo/hello"; // (1)
+//option go_package = "../pbgo/hello"; // protoc --go_out=plugins=grpc:. hello.proto  生成的代码还是以执行protoc的位置开始的
 //option go_package = "golearning/grpc/v1/pbgo/hello"; // protoc --go_out=plugins=grpc:. hello.proto  生成的代码还是以执行protoc的位置开始的
 
 message String {
@@ -11,5 +12,11 @@ message String {
 
 service HelloService {
   rpc Hello (String) returns (String);
+
+  // 服务端或客户端的单向流是双向流的特例，我们在 HelloService 增加一个支持双向流的 Channel 方法：
+  // 关键字 stream 指定启用流特性，参数部分是接收客户端参数的流，返回值是返回给客户端的流。
+  rpc Channel (stream String) returns (stream String);
 }
 // protoc --go_out=plugins=grpc:. hello.proto
+
+// protoc --go_out=plugins=grpc:. ./golearning/grpc/v1/pb/hello.proto //(1)

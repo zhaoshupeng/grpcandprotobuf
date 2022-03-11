@@ -1,36 +1,58 @@
 package main
 
 import (
-	"fmt"
+	"context"
+	"golearning/grpc/v1/pbgo/hello"
+	"google.golang.org/grpc"
+	"io"
 	"log"
 	"net"
-	"net/rpc"
 )
 
-type HelloService struct {}
+type HelloServiceImpl struct {}
 
-// 其中Hello方法必须满足Go语言的RPC规则：方法只能有两个可序列化的参数，其中第二个参数是指针类型，并且返回一个error类型，同时必须是公开的方法。
-func (p *HelloService) Hello(request string, reply *string) error {
-	*reply = "hello:" + request
-	return nil
+// 基于服务端的 HelloServiceServer 接口可以重新实现 HelloService 服务：
+func (p *HelloServiceImpl) Hello(ctx context.Context, args *hello.String,) (*hello.String,error) {
+	reply := &hello.String{Value: "hello:" + args.GetValue()}
+	return reply, nil
 }
 
+func (p *HelloServiceImpl) Channel(stream hello.HelloService_ChannelServer) error {
+	for {
+		// 服务端在循环中接收客户端发来的数据，如果遇到 io.EOF 表示客户端流被关闭，如果函数退出表示服务端流关闭。
+		args, err := stream.Recv()
+		if err != nil {
+			if err == io.EOF {
+				return nil
+			}
+			return err
+		}
+
+		reply := &hello.String{Value: "hello:" + args.GetValue()}
+
+		err = stream.Send(reply)
+		if err != nil {
+			return err
+		}
+	}
+}
+
+
+
+
+// gRPC 服务的启动流程和标准库的 RPC 服务启动流程类似：
 func main() {
-	// 将对象类型中所有满足RPC规则的对象方法注册为RPC函数，所有注册的方法会放在“HelloService”服务空间之下
-	_ = rpc.RegisterName("HelloService", new(HelloService))
 
-	// 建立一个唯一的TCP链接，并且通过rpc.ServeConn函数在该TCP链接上为对方提供RPC服务。
-	listener, err := net.Listen("tcp", ":1234")
-	if err != nil {
-		log.Fatal("ListenTCP error:", err)
-	}
+	// 首先是通过 grpc.NewServer() 构造一个 gRPC 服务对象
+	grpcServer := grpc.NewServer()
+	// 然后通过 gRPC 插件生成的 RegisterHelloServiceServer 函数注册我们实现的 HelloServiceImpl 服务。
+	hello.RegisterHelloServiceServer(grpcServer, new(HelloServiceImpl))
 
-	conn, err := listener.Accept()
+	// 然后通过 grpcServer.Serve(lis) 在一个监听端口上提供 gRPC 服务。
+	lis, err := net.Listen("tcp", ":1234")
 	if err != nil {
-		log.Fatal("Accept error:", err)
+		log.Fatal(err)
 	}
-	fmt.Println("before---------------")
-	rpc.ServeConn(conn)
-	fmt.Println("after---------------")
+	grpcServer.Serve(lis)
 
 }

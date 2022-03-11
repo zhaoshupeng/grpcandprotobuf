@@ -17,6 +17,8 @@ import "google/protobuf/descriptor.proto";
 
  */
 
+// go_package 该属性也表示其他包引用该包的导入路径(生成的go文件),可参考grpc目录下的v2_pubsub
+
 // option的定义格式是"option" optionName "=" constant ";"
 // --go_out=.  和 go_package 共同决定了生成go文件的未知
 //option go_package ="./api";

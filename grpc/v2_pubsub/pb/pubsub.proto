@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package pubsub;
+
+import "golearning/grpc/v1/pb/hello.proto"; // 引入其他proto包,
+
+// 该属性也表示其他包引用该包的导入路径
+option go_package = "golearning/grpc/v2_pubsub/pbgo/pubsubservice"; // protoc --go_out=plugins=grpc:. hello.proto  生成的代码还是以执行protoc的位置开始的
+
+//message String {
+//  string value = 1;
+//}
+
+service PubsubService {
+  rpc Publish (main.String) returns (main.String);
+  rpc Subscribe (main.String) returns (stream main.String);
+}
+
+
+// protoc --proto_path=$GOPATH/src --proto_path=$GOPATH/src/golearning/grpc/v2_pubsub/pb/ --go_out=plugins=grpc:. golearning/grpc/v2_pubsub/pb/pubsub.proto

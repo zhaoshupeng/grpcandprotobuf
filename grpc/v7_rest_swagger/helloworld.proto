@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "./;main";
+
+// 开源社区中的 grpc-gateway 项目就实现了将 gRPC 服务转为 REST 服务的能力。
+// 提示 Import "google/api/annotations.proto" was not found or had errors.
+// 解决方式参考：https://www.cnblogs.com/yisany/p/14875488.html
+// https://www.cnblogs.com/zly-go/p/15472056.html
+import "google/api/annotations.proto";
+
+message StringMessage {
+  string value = 1;
+}
+
+// 通过在 Protobuf 文件中添加路由相关的元信息，通过自定义的代码插件生成路由相关的处理代码，最终将 REST 请求转给更后端的 gRPC 服务处理。
+// 路由扩展元信息也是通过 Protobuf 的元数据扩展用法提供：
+service RestService {
+  // 首先为 gRPC 定义了 Get 和 Post 方法，然后通过元扩展语法在对应的方法后添加路由信息。
+  //其中 “/get/{value}” 路径对应的是 Get 方法，{value} 部分对应参数中的 value 成员，结果通过 json 格式返回。
+  //Post 方法对应 “/post” 路径，body 中包含 json 格式的请求信息。
+  rpc Get(StringMessage) returns (StringMessage) {
+    option (google.api.http) = {
+      get: "/get/{value}"
+    };
+  }
+  rpc Post(StringMessage) returns (StringMessage) {
+    option (google.api.http) = {
+      post: "/post"
+      body: "*"
+    };
+  }
+}
+// 然后通过以下命令安装 protoc-gen-grpc-gateway 插件：go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
